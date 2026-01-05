@@ -1,4 +1,5 @@
 import { Storage } from './storage.js';
+import { VERSION } from './version.js';
 
 // State
 let currentPhotoBlob = null;
@@ -232,6 +233,17 @@ window.finishUpload = () => window.showScreen('screen-dashboard');
 
 // Init
 document.addEventListener('DOMContentLoaded', () => {
-    // Check if logged in (optional)
-    // if(localStorage.getItem('infotic_user')) showScreen('screen-dashboard');
+    const current = localStorage.getItem('infotic_version');
+    const versionEl = document.getElementById('version-label');
+    if (versionEl) versionEl.innerText = `v${VERSION}`;
+    if (current !== VERSION) {
+        const banner = document.getElementById('update-banner');
+        const textEl = document.getElementById('update-text');
+        if (textEl) textEl.innerText = `Actualizado a v${VERSION}`;
+        if (banner) {
+            banner.classList.remove('hidden');
+            setTimeout(() => banner.classList.add('hidden'), 3000);
+        }
+        localStorage.setItem('infotic_version', VERSION);
+    }
 });

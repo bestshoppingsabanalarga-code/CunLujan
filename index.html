@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>Infotic Gestión Evidencias</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -32,17 +32,22 @@
 <body>
 
     <div class="app-container relative bg-gray-50">
+        <div id="update-banner" class="absolute top-0 left-0 right-0 z-50 hidden">
+            <div class="mx-4 mt-4 rounded-lg bg-green-600 text-white px-4 py-2 text-sm shadow">
+                <span id="update-text">Actualización aplicada</span>
+            </div>
+        </div>
         
         <!-- PANTALLA 1: LOGIN -->
-        <div id="screen-login" class="screen active bg-brand-primary h-full justify-center items-center px-8 text-white">
+        <div id="screen-login" class="screen active bg-brand-primary h-full justify-center items-center px-6 sm:px-8 text-white">
             <div class="mb-10 flex flex-col items-center">
                 <div class="w-20 h-20 bg-white rounded-2xl flex items-center justify-center mb-4 shadow-lg">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-brand-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                     </svg>
                 </div>
-                <h1 class="text-3xl font-bold tracking-wider">INFOTIC SAS</h1>
-                <p class="text-blue-200 text-sm mt-1">Gestión de Evidencias</p>
+                <h1 class="text-3xl md:text-4xl font-bold tracking-wider">INFOTIC SAS</h1>
+                <p class="text-blue-200 text-sm md:text-base mt-1">Gestión de Evidencias</p>
             </div>
 
             <form id="login-form" class="w-full space-y-4">
@@ -58,16 +63,16 @@
                     INGRESAR
                 </button>
             </form>
-            <p class="mt-8 text-xs text-blue-300">v2.0.0 - University Project</p>
+            <p id="version-label" class="mt-8 text-xs text-blue-300">v</p>
         </div>
 
         <!-- PANTALLA 2: DASHBOARD -->
         <div id="screen-dashboard" class="screen h-full relative">
-            <div class="bg-brand-primary pt-12 pb-8 px-6 rounded-b-3xl shadow-md z-10">
+            <div class="bg-brand-primary pt-10 md:pt-12 pb-6 md:pb-8 px-6 md:px-8 rounded-b-3xl shadow-md z-10">
                 <div class="flex justify-between items-center mb-4">
                     <div>
                         <p class="text-blue-200 text-sm">Bienvenido,</p>
-                        <h2 class="text-2xl font-bold text-white">Hola, Inspector</h2>
+                        <h2 class="text-2xl md:text-3xl font-bold text-white">Hola, Inspector</h2>
                     </div>
                     <div class="h-10 w-10 bg-blue-700 rounded-full flex items-center justify-center border-2 border-blue-400">
                         <span class="text-white font-bold">JD</span>
@@ -87,7 +92,7 @@
                 </div>
             </div>
 
-            <div class="flex-1 px-6 py-6 overflow-y-auto pb-24">
+            <div class="flex-1 px-6 md:px-8 py-6 overflow-y-auto pb-24">
                 <h3 class="text-gray-500 font-semibold text-sm mb-4 uppercase tracking-wider">Historial</h3>
                 
                 <div id="evidence-list" class="space-y-3">
@@ -104,16 +109,16 @@
 
         <!-- PANTALLA 3: FORMULARIO CAPTURA -->
         <div id="screen-capture" class="screen bg-gray-50 h-full">
-            <div class="bg-white px-6 py-4 shadow-sm flex items-center sticky top-0 z-10">
+            <div class="bg-white px-6 md:px-8 py-4 shadow-sm flex items-center sticky top-0 z-10">
                 <button onclick="goToDashboard()" class="p-2 -ml-2 text-gray-600 hover:text-brand-primary">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                     </svg>
                 </button>
-                <h2 class="ml-4 text-lg font-bold text-gray-800">Nueva Evidencia</h2>
+                <h2 class="ml-4 text-lg md:text-xl font-bold text-gray-800">Nueva Evidencia</h2>
             </div>
 
-            <div class="p-6 flex-1 overflow-y-auto">
+            <div class="p-6 md:p-8 flex-1 overflow-y-auto">
                 <form id="capture-form" class="space-y-6">
                     <!-- ID Nodo -->
                     <div>
@@ -159,7 +164,7 @@
                             </div>
                             
                             <!-- Preview Image -->
-                            <img id="photo-preview" class="hidden w-full h-48 object-cover absolute inset-0 z-10" />
+                            <img id="photo-preview" class="hidden w-full h-40 sm:h-48 md:h-56 object-cover absolute inset-0 z-10" />
                             
                             <span id="photo-text" class="z-20 mt-2 text-sm font-medium">Tomar Foto / Adjuntar</span>
                         </button>
@@ -228,6 +233,6 @@
     </div>
 
     <!-- Main Logic -->
-    <script type="module" src="js/app.js"></script>
+    <script type="module" src="js/app.js?v=2.2.0"></script>
 </body>
 </html>
