@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Infotic Gestión Evidencias</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#0f172a',
+                            primary: '#1e3a8a',
+                            accent: '#3b82f6',
+                            light: '#f8fafc',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="app-container relative bg-gray-50">
+        
+        <!-- PANTALLA 1: LOGIN -->
+        <div id="screen-login" class="screen active bg-brand-primary h-full justify-center items-center px-8 text-white">
+            <div class="mb-10 flex flex-col items-center">
+                <div class="w-20 h-20 bg-white rounded-2xl flex items-center justify-center mb-4 shadow-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-brand-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                    </svg>
+                </div>
+                <h1 class="text-3xl font-bold tracking-wider">INFOTIC SAS</h1>
+                <p class="text-blue-200 text-sm mt-1">Gestión de Evidencias</p>
+            </div>
+
+            <form id="login-form" class="w-full space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-blue-100 mb-1">Usuario</label>
+                    <input type="text" value="inspector01" class="w-full px-4 py-3 rounded-lg bg-blue-800 border border-blue-700 text-white placeholder-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-400 transition" placeholder="Ingrese su usuario">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-blue-100 mb-1">Contraseña</label>
+                    <input type="password" value="******" class="w-full px-4 py-3 rounded-lg bg-blue-800 border border-blue-700 text-white placeholder-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-400 transition" placeholder="••••••••">
+                </div>
+                <button type="submit" class="w-full bg-white text-brand-primary font-bold py-3 rounded-lg shadow-lg hover:bg-gray-100 transform active:scale-95 transition mt-6">
+                    INGRESAR
+                </button>
+            </form>
+            <p class="mt-8 text-xs text-blue-300">v2.0.0 - University Project</p>
+        </div>
+
+        <!-- PANTALLA 2: DASHBOARD -->
+        <div id="screen-dashboard" class="screen h-full relative">
+            <div class="bg-brand-primary pt-12 pb-8 px-6 rounded-b-3xl shadow-md z-10">
+                <div class="flex justify-between items-center mb-4">
+                    <div>
+                        <p class="text-blue-200 text-sm">Bienvenido,</p>
+                        <h2 class="text-2xl font-bold text-white">Hola, Inspector</h2>
+                    </div>
+                    <div class="h-10 w-10 bg-blue-700 rounded-full flex items-center justify-center border-2 border-blue-400">
+                        <span class="text-white font-bold">JD</span>
+                    </div>
+                </div>
+                
+                <div class="bg-white/10 backdrop-blur-sm border border-white/20 p-4 rounded-xl flex items-center justify-between text-white">
+                    <div>
+                        <p class="text-xs text-blue-100 uppercase tracking-wide">Evidencias Total</p>
+                        <p id="evidence-count" class="text-3xl font-bold">0</p>
+                    </div>
+                    <div class="h-10 w-10 bg-green-500/20 rounded-full flex items-center justify-center text-green-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex-1 px-6 py-6 overflow-y-auto pb-24">
+                <h3 class="text-gray-500 font-semibold text-sm mb-4 uppercase tracking-wider">Historial</h3>
+                
+                <div id="evidence-list" class="space-y-3">
+                    <!-- Dynamic List -->
+                </div>
+            </div>
+
+            <button onclick="goToCapture()" class="absolute bottom-6 right-6 h-14 w-14 bg-brand-primary text-white rounded-full shadow-2xl flex items-center justify-center hover:bg-blue-800 transform active:scale-90 transition z-20">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- PANTALLA 3: FORMULARIO CAPTURA -->
+        <div id="screen-capture" class="screen bg-gray-50 h-full">
+            <div class="bg-white px-6 py-4 shadow-sm flex items-center sticky top-0 z-10">
+                <button onclick="goToDashboard()" class="p-2 -ml-2 text-gray-600 hover:text-brand-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+                <h2 class="ml-4 text-lg font-bold text-gray-800">Nueva Evidencia</h2>
+            </div>
+
+            <div class="p-6 flex-1 overflow-y-auto">
+                <form id="capture-form" class="space-y-6">
+                    <!-- ID Nodo -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">ID del Nodo / Sitio</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                            </div>
+                            <input type="text" id="node-id" required class="pl-10 w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-accent focus:border-brand-accent outline-none transition" placeholder="Ej: N-2045-BOG">
+                        </div>
+                    </div>
+
+                    <!-- Tipo Evidencia -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Tipo de Evidencia</label>
+                        <select id="evidence-type" class="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white focus:ring-2 focus:ring-brand-accent outline-none transition appearance-none">
+                            <option value="Torre">Torre de Telecomunicaciones</option>
+                            <option value="Gabinete">Gabinete de Control</option>
+                            <option value="Energia">Sistemas de Energía</option>
+                            <option value="Obra Civil">Obra Civil</option>
+                        </select>
+                    </div>
+
+                    <!-- Foto Button & Preview -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Registro Fotográfico</label>
+                        
+                        <!-- Hidden Real Input -->
+                        <input type="file" id="camera-input" accept="image/*" capture="environment" class="hidden">
+                        
+                        <button type="button" id="photo-btn" onclick="triggerCamera()" class="w-full py-8 border-2 border-dashed border-gray-300 rounded-xl bg-gray-50 flex flex-col items-center justify-center text-gray-500 hover:bg-gray-100 transition group overflow-hidden relative">
+                            <!-- Placeholder -->
+                            <div id="photo-placeholder" class="flex flex-col items-center">
+                                <div class="bg-white p-3 rounded-full shadow-sm mb-2 group-hover:scale-110 transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-brand-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                </div>
+                            </div>
+                            
+                            <!-- Preview Image -->
+                            <img id="photo-preview" class="hidden w-full h-48 object-cover absolute inset-0 z-10" />
+                            
+                            <span id="photo-text" class="z-20 mt-2 text-sm font-medium">Tomar Foto / Adjuntar</span>
+                        </button>
+                    </div>
+
+                    <!-- GPS Info -->
+                    <div class="bg-blue-50 border border-blue-100 rounded-lg p-3 flex items-start gap-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-brand-primary mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                        </svg>
+                        <div>
+                            <p class="text-xs font-bold text-brand-primary uppercase">Ubicación Actual</p>
+                            <p id="geo-status" class="text-sm text-gray-600 font-mono">Esperando GPS...</p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="p-6 bg-white border-t border-gray-100 sticky bottom-0 z-10">
+                <button onclick="submitEvidence()" class="w-full bg-brand-primary text-white font-bold py-4 rounded-xl shadow-lg hover:bg-blue-800 transform active:scale-95 transition flex justify-center items-center gap-2">
+                    <span>SUBIR EVIDENCIA</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- PANTALLA 4: CARGA / EXITO (Overlay) -->
+        <div id="screen-loading" class="screen absolute inset-0 bg-white z-50 flex-col justify-center items-center px-8 hidden">
+            
+            <!-- State: Loading -->
+            <div id="loading-state" class="w-full flex flex-col items-center">
+                <div class="mb-8 relative">
+                    <div class="h-24 w-24 rounded-full border-4 border-gray-100 flex items-center justify-center">
+                         <svg class="animate-spin h-10 w-10 text-brand-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                    </div>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">Sincronizando...</h3>
+                <p class="text-gray-500 text-center mb-8">Subiendo evidencia...</p>
+                <div class="w-full bg-gray-200 rounded-full h-2.5 overflow-hidden">
+                    <div id="progress-bar-fill" class="bg-brand-primary h-2.5 rounded-full progress-bar"></div>
+                </div>
+            </div>
+
+            <!-- State: Success -->
+            <div id="success-state" class="hidden flex flex-col items-center animate-bounce-in">
+                <div class="h-24 w-24 bg-green-100 rounded-full flex items-center justify-center mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold text-green-600 mb-2">¡Éxito!</h3>
+                <p class="text-gray-600 text-center mb-8">Evidencia guardada localmente.</p>
+                
+                <button onclick="finishUpload()" class="bg-gray-800 text-white px-8 py-3 rounded-lg font-medium shadow hover:bg-gray-900 transition">
+                    Continuar
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Main Logic -->
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>
